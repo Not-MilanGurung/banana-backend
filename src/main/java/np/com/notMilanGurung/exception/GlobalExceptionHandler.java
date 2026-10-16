@@ -52,14 +52,14 @@ public class GlobalExceptionHandler {
   /**
    * Catches all the other expections
    */
-  @ExceptionHandler()
-  public ResponseEntity<Map<String, Object>> handleError(Exception ex) {
+  @ExceptionHandler(ErrorResponse.class)
+  public ResponseEntity<Map<String, Object>> handleError(ErrorResponse ex) {
     Map<String, Object> response = new HashMap<>();
 
     response.put("error", "Error Encountered");
     response.put("message", ex.getMessage());
 
-    return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    return  new ResponseEntity<>(response, ex.getStatusCode());
   }
 
 

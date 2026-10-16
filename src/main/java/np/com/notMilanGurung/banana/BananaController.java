@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import np.com.notMilanGurung.exception.ErrorResponse;
 
 @RestController 
 @RequestMapping("/banana")
@@ -47,7 +48,7 @@ public class BananaController {
     @RequestParam (required = false) 
     @Pattern(regexp = "yes|no", message = "The base64Encoding must be either 'yes' or 'no'")
     String base64Encoded
-  ) {
+  ) throws ErrorResponse {
     return bananaService.fetchAGame(format, base64Encoded);
   }
 }
