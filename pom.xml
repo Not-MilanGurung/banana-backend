@@ -8,6 +8,10 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.1.1</version>
 	</parent>
+
+  <groupId>np.com.notMilanGurung</groupId>
+	<artifactId>banana-backend</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
   
   <dependencies>
     <dependency>
@@ -38,9 +42,5 @@
       </plugin>
     </plugins>
   </build>
-
-	<groupId>np.com.notMilanGurung</groupId>
-	<artifactId>banana-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 
 </project>
