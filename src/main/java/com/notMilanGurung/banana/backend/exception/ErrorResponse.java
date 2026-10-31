@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.exception;
+package com.notMilanGurung.banana.backend.exception;
 
 import org.springframework.http.HttpStatus;
 

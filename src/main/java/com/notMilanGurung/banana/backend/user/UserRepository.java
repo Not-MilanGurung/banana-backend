@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.user;
+package com.notMilanGurung.banana.backend.user;
 
 import java.util.Optional;
 import java.util.UUID;

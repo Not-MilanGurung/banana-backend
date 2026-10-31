@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.exception;
+package com.notMilanGurung.banana.backend.exception;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +59,20 @@ public class GlobalExceptionHandler {
     response.put("error", "Error Encountered");
     response.put("message", ex.getMessage());
 
-    return  new ResponseEntity<>(response, ex.getStatusCode());
+    return new ResponseEntity<>(response, ex.getStatusCode());
   }
 
+  /**
+   * Catches business logic RuntimeExceptions and returns a clean 400 response to
+   * the user.
+   */
+  @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeException(Exception ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "Bad Request");
+        response.put("message", ex.getMessage());
+        
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
 }

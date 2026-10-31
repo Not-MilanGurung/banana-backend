@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.banana;
+package com.notMilanGurung.banana.backend.banana;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,8 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import np.com.notMilanGurung.exception.ErrorResponse;
+import com.notMilanGurung.banana.backend.exception.ErrorResponse;
 
 @RestController 
 @RequestMapping("/banana")

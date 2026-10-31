@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.config;
+package com.notMilanGurung.banana.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

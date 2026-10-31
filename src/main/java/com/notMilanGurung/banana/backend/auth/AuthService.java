@@ -1,12 +1,12 @@
-package np.com.notMilanGurung.auth;
+package com.notMilanGurung.banana.backend.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import np.com.notMilanGurung.exception.ErrorResponse;
-import np.com.notMilanGurung.user.User;
-import np.com.notMilanGurung.user.UserRepository;
+import com.notMilanGurung.banana.backend.exception.ErrorResponse;
+import com.notMilanGurung.banana.backend.user.User;
+import com.notMilanGurung.banana.backend.user.UserRepository;
 
 @Service 
 public class AuthService {

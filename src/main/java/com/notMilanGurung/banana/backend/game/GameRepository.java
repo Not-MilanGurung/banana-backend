@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.game;
+package com.notMilanGurung.banana.backend.game;
 
 import java.util.List;
 import java.util.UUID;

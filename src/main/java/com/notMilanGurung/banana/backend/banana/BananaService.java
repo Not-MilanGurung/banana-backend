@@ -1,4 +1,4 @@
-package np.com.notMilanGurung.banana;
+package com.notMilanGurung.banana.backend.banana;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import np.com.notMilanGurung.exception.ErrorResponse;
+import com.notMilanGurung.banana.backend.exception.ErrorResponse;
 
 @Service 
 public class BananaService {

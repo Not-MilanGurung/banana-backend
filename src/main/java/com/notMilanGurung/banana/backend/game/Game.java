@@ -1,6 +1,6 @@
-package np.com.notMilanGurung.game;
+package com.notMilanGurung.banana.backend.game;
 
-import np.com.notMilanGurung.user.User;
+import com.notMilanGurung.banana.backend.user.User;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

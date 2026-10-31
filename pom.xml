@@ -9,9 +9,9 @@
 		<version>4.1.1</version>
 	</parent>
 
-  <groupId>np.com.notMilanGurung</groupId>
-	<artifactId>banana-backend</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+  <groupId>com.notMilanGurung</groupId>
+	<artifactId>banana.backend</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
 
   <properties>
     <java.version>25</java.version>
@@ -53,6 +53,25 @@
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    <!-- JJWT for JSON Web Tokens -->
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>0.13.0</version>
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>0.13.0</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>0.13.0</version>
+        <scope>runtime</scope>
     </dependency>
 
   </dependencies>
