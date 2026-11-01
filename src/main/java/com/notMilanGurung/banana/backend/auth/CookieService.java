@@ -23,12 +23,12 @@ public class CookieService {
 
   public void addAuthCookies(HttpServletResponse res, String access, String refresh) {
     res.addHeader(HttpHeaders.SET_COOKIE, build(ACCESS, access, "/", accessExp).toString());
-    res.addHeader(HttpHeaders.SET_COOKIE, build(REFRESH, refresh, "/auth", refreshExp).toString());
+    res.addHeader(HttpHeaders.SET_COOKIE, build(REFRESH, refresh, "/", refreshExp).toString());
   }
 
   public void clearAuthCookies(HttpServletResponse res) {
     res.addHeader(HttpHeaders.SET_COOKIE, build(ACCESS, "", "/", 0).toString());
-    res.addHeader(HttpHeaders.SET_COOKIE, build(REFRESH, "", "/auth", 0).toString());
+    res.addHeader(HttpHeaders.SET_COOKIE, build(REFRESH, "", "/", 0).toString());
   }
 
   public String read(HttpServletRequest req, String name) {
@@ -43,7 +43,7 @@ public class CookieService {
     return ResponseCookie.from(name, value)
         .httpOnly(true)
         .secure(secure)
-        .sameSite("Lax")
+        .sameSite("Strict")
         .path(path)
         .maxAge(Duration.ofMillis(maxAgeMs))
         .build();
