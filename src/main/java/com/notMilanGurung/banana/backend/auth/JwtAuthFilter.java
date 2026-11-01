@@ -2,13 +2,13 @@ package com.notMilanGurung.banana.backend.auth;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.notMilanGurung.banana.backend.user.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -22,13 +22,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
   private final JwtService jwtService;
   private final CookieService cookieService;
-  private final UserRepository userRepository;
 
-  public JwtAuthFilter(JwtService jwtService, CookieService cookieService,
-                       UserRepository userRepository) {
+  public JwtAuthFilter(JwtService jwtService, CookieService cookieService) {
     this.jwtService = jwtService;
     this.cookieService = cookieService;
-    this.userRepository = userRepository;
   }
 
   @Override
@@ -40,11 +37,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
       try {
         Claims claims = jwtService.parse(token);
         if ("access".equals(claims.get("type", String.class))) {
-          String username = claims.getSubject();
-          if (userRepository.findByUsername(username).isPresent()) {
-            var auth = new UsernamePasswordAuthenticationToken(username, null, List.of());
-            SecurityContextHolder.getContext().setAuthentication(auth);
-          }
+          UUID id = UUID.fromString(claims.getSubject());
+          String username = claims.get("username", String.class);
+
+          AuthPrincipal principal = new AuthPrincipal(id, username);
+
+          var auth = new UsernamePasswordAuthenticationToken(principal, null, List.of());
+          SecurityContextHolder.getContext().setAuthentication(auth);
         }
       } catch (JwtException | IllegalArgumentException ignored) {
         // invalid/expired: stay unauthenticated, entry point returns 401

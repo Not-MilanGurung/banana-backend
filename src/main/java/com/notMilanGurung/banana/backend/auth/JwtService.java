@@ -1,12 +1,15 @@
 package com.notMilanGurung.banana.backend.auth;
 
 import java.util.Date;
+import java.util.UUID;
+
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -26,23 +29,28 @@ public class JwtService {
     this.refreshExp = refreshExp;
   }
 
-  public String generateAccessToken(String username) {
-    return build(username, accessExp, "access");
+  public String generateAccessToken(UUID id, String username) {
+    return build(id, username, accessExp, "access");
   }
 
-  public String generateRefreshToken(String username) {
-    return build(username, refreshExp, "refresh");
+  public String generateRefreshToken(UUID id) {
+    return build(id, null, refreshExp, "refresh");
   }
 
-  private String build(String subject, long exp, String type) {
+  private String build(UUID subject, String username, long exp, String type) {
     Date now = new Date();
-    return Jwts.builder()
-        .subject(subject)
+    final JwtBuilder builder = Jwts.builder()
+        .subject(subject.toString())
         .claim("type", type)
         .issuedAt(now)
         .expiration(new Date(now.getTime() + exp))
-        .signWith(key)
-        .compact();
+        .signWith(key);
+    
+    if (username != null) {
+      builder.claim("username", username);
+    }
+
+    return builder.compact();
   }
 
   /** Throws JwtException if invalid or expired */
