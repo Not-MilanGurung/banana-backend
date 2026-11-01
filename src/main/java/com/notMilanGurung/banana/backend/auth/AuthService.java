@@ -8,20 +8,20 @@ import com.notMilanGurung.banana.backend.exception.ErrorResponse;
 import com.notMilanGurung.banana.backend.user.User;
 import com.notMilanGurung.banana.backend.user.UserRepository;
 
-@Service 
+@Service
 public class AuthService {
-  
+
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder passwordEncoder;
-  private final int bcryptRounds = 10;
 
-  public AuthService(UserRepository userRepository) {
+  public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
-    this.passwordEncoder = new BCryptPasswordEncoder(bcryptRounds);
+    this.passwordEncoder = passwordEncoder;
   }
 
   /**
    * Register a new user
+   * 
    * @param request
    * @return user
    * @throws ErrorResponse
@@ -41,19 +41,19 @@ public class AuthService {
 
   /**
    * Login for user currently (currently only return true)
+   * 
    * @param request
    * @return true
    * @throws ErrorResponse
    */
-  public boolean login(LoginRequest request) throws ErrorResponse {
+  public User login(LoginRequest request) throws ErrorResponse {
     User user = userRepository.findByUsername(request.getUsername())
-                  .orElseThrow(() -> new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid username or password"));
-    final boolean passwordMatch = passwordEncoder.matches(request.getPassword(), user.getPasswordHash());
-    if (!passwordMatch) {
-      throw new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid username or password");
-    } 
+        .orElseThrow(() -> new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid username or password"));
 
-    return passwordMatch;
+    if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+      throw new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid username or password");
+    }
+    return user;
   }
 
 }
