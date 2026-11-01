@@ -1,4 +1,4 @@
-package com.notMilanGurung.banana.scores;
+package com.notMilanGurung.banana.backend.scores;
 
 import java.util.List;
 import java.util.Map;
