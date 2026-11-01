@@ -2,6 +2,9 @@ package com.notMilanGurung.banana.backend.game;
 
 import com.notMilanGurung.banana.backend.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,24 +18,26 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Getter private UUID id;
 
     @Column(nullable = false)
-    private int score; // how many correct
+    @Getter  @Setter private int streak = 0;
+
+    @Column(nullable = false)
+    @Getter @Setter private boolean active = true;
+
+    @Column(nullable = false)
+    @Getter @Setter private String currentQuestion;
+
+    @Column(nullable = false)
+    @Getter @Setter private int currentSolution;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @Getter private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Links game record to a specific user
+    @Getter @Setter private User user; // Links game record to a specific user
 
-    // Getters and Setters
-    public UUID getId() { return id; }
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = score; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
 }

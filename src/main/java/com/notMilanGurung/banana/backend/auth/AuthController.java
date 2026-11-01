@@ -1,5 +1,7 @@
 package com.notMilanGurung.banana.backend.auth;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import com.notMilanGurung.banana.backend.exception.ErrorResponse;
 import com.notMilanGurung.banana.backend.user.User;
+import com.notMilanGurung.banana.backend.user.UserRepository;
 import com.notMilanGurung.banana.backend.user.UserResponse;;
 
 @RestController
@@ -28,11 +31,13 @@ public class AuthController {
   private final AuthService authService;
   private final JwtService jwtService;
   private final CookieService cookieService;
+  private final UserRepository userRepository;
 
-  public AuthController(AuthService authService, JwtService jwtService, CookieService cookieService) {
+  public AuthController(AuthService authService, JwtService jwtService, CookieService cookieService, UserRepository userRepository) {
     this.authService = authService;
     this.jwtService = jwtService;
     this.cookieService = cookieService;
+    this.userRepository = userRepository;
   }
 
   @PostMapping("/register")
@@ -56,8 +61,8 @@ public class AuthController {
 
     User user = authService.login(request);
     cookieService.addAuthCookies(res,
-        jwtService.generateAccessToken(user.getUsername()),
-        jwtService.generateRefreshToken(user.getUsername()));
+        jwtService.generateAccessToken(user.getId(), user.getUsername()),
+        jwtService.generateRefreshToken(user.getId()));
     return ResponseEntity.ok(UserResponse.from(user));
   }
 
@@ -72,10 +77,13 @@ public class AuthController {
       if (!"refresh".equals(claims.get("type", String.class))) {
         throw new ErrorResponse(HttpStatus.UNAUTHORIZED, "Invalid Refresh Token");
       }
-      String username = claims.getSubject();
+      UUID id = UUID.fromString(claims.getSubject());
+      User user = this.userRepository.findById(id)
+                  .orElseThrow(() -> new ErrorResponse(HttpStatus.NOT_FOUND, "User not found"));
+
       cookieService.addAuthCookies(res,
-          jwtService.generateAccessToken(username),
-          jwtService.generateRefreshToken(username)); // rotates the refresh token
+          jwtService.generateAccessToken(user.getId(), user.getUsername()),
+          jwtService.generateRefreshToken(user.getId())); // rotates the refresh token
       return ResponseEntity.ok().build();
     } catch (JwtException e) {
       throw new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error refreshing token. Please try again later");

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -17,36 +19,29 @@ import jakarta.validation.constraints.NotBlank;
 public class User {
   @Id 
   @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id; 
+  @Getter private UUID id; 
 
   @NotBlank
   @Column(nullable = false, unique = true)
-  private String username;
+  @Getter @Setter private String username;
 
   @Email 
   @Column(unique = true)
-  private String email; // Optional
+  @Getter @Setter private String email; // Optional
 
   @NotBlank 
   @Column(nullable = false)
-  private String passwordHash;
+  @Getter @Setter private String passwordHash;
+
+  @Column(nullable = false, columnDefinition = "integer default 0")
+  @Getter @Setter private int highScore = 0;
 
   @CreatedDate 
   @Column(nullable = false, updatable = false)
-  private LocalDateTime createdAt;
+  @Getter private LocalDateTime createdAt;
 
   @LastModifiedDate
   @Column(nullable = false)
-  private LocalDateTime updatedAt;
+  @Getter private LocalDateTime updatedAt;
 
-  // Getters and Setters
-  public UUID getId() { return id; }
-  public String getUsername() { return username; }
-  public void setUsername(String username) { this.username = username; }
-  public String getEmail() { return email; }
-  public void setEmail(String email) { this.email = email; }
-  public String getPasswordHash() { return passwordHash; }
-  public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-  public LocalDateTime getCreatedAt() { return createdAt; }
-  public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
