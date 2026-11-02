@@ -11,7 +11,7 @@
 
   <groupId>com.notMilanGurung</groupId>
 	<artifactId>banana.backend</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.1</version>
 
   <properties>
     <java.version>25</java.version>
