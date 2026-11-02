@@ -7,6 +7,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +33,7 @@ public class User {
 
   @NotBlank 
   @Column(nullable = false)
+  @JsonIgnore 
   @Getter @Setter private String passwordHash;
 
   @Column(nullable = false, columnDefinition = "integer default 0")
